@@ -4,13 +4,15 @@ import {match} from './match.js';
 const form = document.querySelector(".requestSummoner"),
     input = form.querySelector("input");
 
+const info = document.querySelector(".info");
 const summoner = document.querySelector(".summoner");
 const league = document.querySelector(".league"),
     head = league.querySelector(".league_head"),
     tierRank = league.querySelector(".league_tierRank"),
-    info = league.querySelector(".league_info"),
+    league_info = league.querySelector(".league_info"),
     winRate = league.querySelector(".league_winRate");
 const table = document.querySelector(".table");
+const leagueProfile = document.querySelector(".league_profile");
 
 const handleSubmit = async(e) =>{
     e.preventDefault();
@@ -37,15 +39,23 @@ const init = async() =>{
     }
     const {tier,rank,leaguePoints,wins,losses} = leagueRes[idx];
     const matchListRes = await API.getRiotMatchList(
-        {accountId, queue : 420, season : 13, beginIndex : 0, endIndex : 1});
-
+        {accountId, queue : 420, season : 13, beginIndex : 0, endIndex : 10});
+    
+    var num = 1;
+    switch(rank){
+        case "I" : num = 1;
+        case "II" : num = 2;
+        case "III" : num = 3;
+        case "IV" : num = 4; 
+    }
+    leagueProfile.src = `https://opgg-static.akamaized.net/images/medals/${tier.toLowerCase()}_${num}.png`;
 
     head.innerHTML = "솔로랭크";
     summoner.innerHTML = `${name} ${summonerLevel}레벨`
-    tierRank.innerHTML = `${tier} ${rank}`;
-    info.innerHTML = `<b>${leaguePoints}LP</b> / ${wins}승 ${losses}패`;
+    tierRank.innerHTML = `<b>${tier} ${rank}</b>`;
+    league_info.innerHTML = `<b>${leaguePoints}LP</b> / ${wins}승 ${losses}패`;
     winRate.innerHTML = `승률 ${parseInt(wins/(wins+losses) * 100)}%`;
-    
+
     const matches = matchListRes.matches;
 
     matches.map(async(v,i)=>{

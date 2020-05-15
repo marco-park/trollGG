@@ -1,10 +1,14 @@
 import * as API from '../APIs/API.js';
+import metaData from './singleton.js'
+
 
 export const match = async(match,accountId)=>{
     const {timestamp, gameId} = match;
     const matchRes = await API.getRiotMatch({gameId});
     console.log(matchRes);
     const {gameCreation, gameDuration, teams, participantIdentities, participants} = matchRes;
+    const champDic = metaData.championList;
+    const spellDic = metaData.spellList;
 
     var date = new Date(timestamp);
     var $div = document.createElement('div');
@@ -26,11 +30,23 @@ export const match = async(match,accountId)=>{
     
     var $statsBox = document.createElement('div');
     $statsBox.className = 'stats_box'; 
-    var $championProfile = document.createElement('div');
+    var $statsBoxUp = document.createElement('div');
+    $statsBoxUp.className = 'stats_box_up';
+    var $statsBoxDown = document.createElement('div');
+    $statsBoxDown.className = 'stats_box_down';
+    var $championProfile = document.createElement('img');
+    $championProfile.style.borderRadius = '70px';
+    $championProfile.style.width = '50px';
+    $championProfile.style.height = '50px';
+
+    var participantId = 0;
  
     participantIdentities.map((v,i)=>{
         if(v.player.accountId  == accountId){
-            const {championId, teamId} = participants[v.participantId-1];
+            participantId = v.participantId;
+            const {championId, teamId} = participants[participantId-1];
+            $championProfile.src = `https://ddragon.leagueoflegends.com/cdn/10.9.1/img/champion/${champDic[championId].id}.png`;
+            $statsBoxDown.innerHTML = champDic[championId].name;
             const isWin =  teams[(teamId-100)/100].win;
             $div.style.backgroundColor = isWin == "Win" ? '#a3cfec' : '#e2b6b3';
             var $isWin = document.createElement('div');
@@ -39,7 +55,13 @@ export const match = async(match,accountId)=>{
             $isWin.style.color = isWin == "Win" ? '#1a78ae' : '#c6443e';
             $blockLeft.appendChild($isWin);
         }
-    })    
+    });    
+
+    const {spell1Id,spell2Id,stats:{assists,item0,item1,item2,item3,item4,item5,item6}} = participants[participantId-1];
+
+    $statsBoxUp.appendChild($championProfile);
+    $statsBox.appendChild($statsBoxUp);
+    $statsBox.appendChild($statsBoxDown);
     $blockLeft.appendChild($duration);
     $div.appendChild($blockLeft);
     $div.appendChild($statsBox);

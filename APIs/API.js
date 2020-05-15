@@ -2,6 +2,20 @@ import * as fetch from './fetch.js'
 
 const apiUrl = 'http://ec2-54-180-82-172.ap-northeast-2.compute.amazonaws.com:4000/api/'; 
 
+export const getChampList = ()=>{
+    const url = `https://ddragon.leagueoflegends.com/cdn/10.9.1/data/ko_KR/champion.json`;
+    return fetch.getServer(url)
+    .then(res=>res.json())
+    .catch(err => ({err}));
+}
+
+export const getSpellList = ()=>{
+    const url = `https://ddragon.leagueoflegends.com/cdn/10.9.1/data/en_US/summoner.json`;
+    return fetch.getServer(url)
+    .then(res=>res.json())
+    .catch(err => ({err}));
+}
+
 export const getRiotSummoner = (data)=>{
     const url = `${apiUrl}user/riotSummoner`;
     return fetch.getServer(url,data)
