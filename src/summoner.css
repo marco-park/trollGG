@@ -2,7 +2,7 @@ h1{
     cursor: pointer;
 }
 body{
-    background-color: white;
+    background-color: rgb(234,234,234);
 }
 
 .content{
@@ -10,12 +10,25 @@ body{
 }
 
 .summoner{
+    width: 150px;
+    padding: 5px;
+    text-align: center;
     margin-bottom: 3px;
+}
+
+.left_side{
+    border: 1px solid #cdd2d2;
+    box-shadow: 0 1px #dcdfdf;
+    background: #f2f2f2;
+    border-radius: 2px;
+    padding: 10px 10px;
+    display: flex;
+    height: 100px;
+    margin: 10px;
 }
 
 .info{
     text-align: center;
-    width: 30%;
 }
 
 .requestSummoner {
@@ -38,28 +51,42 @@ body{
 }
 
 .block{
+    border: 1px solid #cdd2d2;
+    border-radius: 3px;
     display: flex;
-    font-size: small;
-    margin: 10px;
+    font-size: 12px;
+    margin: 8px;
     color: #555;
+    align-items: center;
 }
 
 .block_left{
     padding: 5px 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
     margin-left: 3px;
     margin-right: 3px;
-    align-items: center;
+    width: 75px;
     text-align: center;
 }
 
 .stats_box{
     padding: 15px 15px;
-    margin-left: 10px;
+}
+
+.stats_box_up{
+    display: flex;
+    align-items: center;
 }
 
 .stats_box_down{
+    font-size: 12px;
     margin-top: 10px;
     text-align: center;
+}
+
+.kda_box{
+    padding: 20px 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    color : #555;
 }
