@@ -1,0 +1,54 @@
+h1{
+    cursor: pointer;
+}
+body{
+    background-color: white;
+}
+
+.content{
+    display: flex;
+}
+
+.summoner{
+    margin-bottom: 3px;
+}
+
+.info{
+    text-align: center;
+    width: 30%;
+}
+
+.requestSummoner {
+    text-align: right;
+    margin: 10px;
+}
+
+#inputSummoner {
+    text-align: center;
+    font-size: 25px;
+}
+
+.league {
+    color: #879292;
+    font-size: small;
+}
+
+.league_tierRank {
+    color : #1f8ecd;
+}
+
+.block{
+    display: flex;
+    font-size: small;
+    margin: 10px;
+    color: #555;
+}
+
+.block_left{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
+    align-items: center;
+    text-align: center;
+}

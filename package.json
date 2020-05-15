@@ -1,0 +1,17 @@
+{
+  "name": "trollgg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "http-server": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "http-server . -c-1"
+  },
+  "author": "",
+  "license": "ISC"
+}

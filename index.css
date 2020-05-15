@@ -1,0 +1,17 @@
+h1{
+    cursor: pointer;
+}
+
+body{
+    background-color: white;
+}
+
+.requestSummoner {
+    text-align: center;
+    margin: 10px;
+}
+
+#inputSummoner {
+    text-align: center;
+    font-size: 70px;
+}
