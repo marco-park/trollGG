@@ -87,6 +87,7 @@ export default async(match,accountId,champDic,spellDic)=>{
     $wardBought.style.marginTop = '5px';
     $participantsBox.style.display = 'flex';
     $participantsBox.style.alignItems = 'center';
+    $participantsBox.style.marginRight = '5px';
 
     var participantId = 0;
     var myTeamId = 100;
