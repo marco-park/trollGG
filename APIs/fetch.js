@@ -1,21 +1,23 @@
 const HEADER_APPJSON = 'application/json';
 const HEADER_WWWENCODED = 'application/x-www-form-urlencoded;charset=UTF-8';
 
-const bodyEncoder = (data=null) => {
-    let formBody = [];
-    for (let property in data) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(data[property]);
+const bodyEncoder = (data) => {
+    if(data === undefined)data=null;
+    var formBody = [];
+    for (var property in data) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(data[property]);
         formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
     return formBody;
 }
 
-export const getServer = async (url, data = null) => {
+export const getServer = async (url, data) => {
+    if(data === undefined)data =null;
     try{
         url = url + '?' + bodyEncoder(data);
-        let res = await fetch(url, {
+        var res = await fetch(url, {
             method : 'GET',
             headers: {
                 Accept: HEADER_APPJSON,

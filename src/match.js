@@ -1,14 +1,9 @@
 import * as API from '../APIs/API.js';
-import metaData from './singleton.js'
 
-export const match = async(match,accountId)=>{
+export default async(match,accountId,champDic,spellDic)=>{
     const {timestamp, gameId} = match;
     const matchRes = await API.getRiotMatch({gameId});
     const {gameCreation, gameDuration, teams, participantIdentities, participants} = matchRes;
-    const champDic = metaData.championList;
-    const spellDic = metaData.spellList;
-
-    console.log(matchRes);
 
     var date = new Date(gameCreation);
     var $div = document.createElement('div');

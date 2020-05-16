@@ -1,5 +1,5 @@
 import * as API from '../APIs/API.js';
-import {match} from './match.js';
+import match from './match.js';
 
 const form = document.querySelector(".requestSummoner"),
     input = form.querySelector("input");
@@ -12,8 +12,7 @@ const league = document.querySelector(".league"),
     winRate = league.querySelector(".league_winRate");
 const leagueProfile = document.querySelector(".league_profile");
 const $table = document.querySelector(".table");
-
-const handleSubmit = async(e) =>{
+const handleSubmit = (e) =>{
     e.preventDefault();
     const summonerName = input.value;
     location.href=`./summoner.html?summonerName=${summonerName}`;
@@ -23,7 +22,6 @@ const init = async() =>{
     form.addEventListener("submit",handleSubmit);
     let params = location.search.substr(location.search.indexOf("?") + 1);
     const summonerName = decodeURI(params.split("=")[1]);
-
     
     const summonerRes = await API.getRiotSummoner({summonerName});
     if(summonerRes.err){
@@ -61,8 +59,17 @@ const init = async() =>{
     var matches = matchListRes.matches;
     matches = await matches.sort((a,b)=>a.timestamp > b.timestamp ? -1 : 1);
 
+    const ChampListRes = await API.getChampList();         
+    var data = ChampListRes.data;
+    const champDic = {};
+    Object.keys(data).map((v,i)=>champDic[data[v].key]={name:data[v].name, id:data[v].id});
+    const spellListData = await API.getSpellList();            
+    const spellDic = {};
+    data = spellListData.data;
+    Object.keys(data).map((v,i)=>spellDic[data[v].key]={id:data[v].id});
+    
     matches.map(async(v,i)=>{
-        const $div = await match(v,accountId);
+        const $div = await match(v,accountId,champDic,spellDic);
         $table.appendChild($div);
     })
 }
