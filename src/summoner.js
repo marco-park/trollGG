@@ -24,14 +24,16 @@ const init = async() =>{
     let params = location.search.substr(location.search.indexOf("?") + 1);
     const summonerName = decodeURI(params.split("=")[1]);
 
+    
     const summonerRes = await API.getRiotSummoner({summonerName});
-    const {name,summonerLevel,accountId, id} = summonerRes;
-    const leagueRes = await API.getRiotLeague({id});
-    if(summonerRes == null){
+    if(summonerRes.err){
         summoner.innerHTML = "등록된 유저가 없습니다."
-        head.innerHTML = "소환사 이름을 확인해 주세요."
+        head.innerHTML = "<h1>소환사 이름을 확인해 주세요.</h1>"
         return;
     }
+    const {name,summonerLevel,accountId, id} = summonerRes;
+    const leagueRes = await API.getRiotLeague({id});
+    
     var idx = 0;
     for (var i = 0; i< leagueRes.length; i++){
         if(leagueRes[i].queueType == 'RANKED_SOLO_5x5')idx = i
@@ -47,6 +49,7 @@ const init = async() =>{
         case "III" : num = 3; break;
         case "IV" : num = 4; break;
     }
+    
     leagueProfile.src = `https://opgg-static.akamaized.net/images/medals/${tier.toLowerCase()}_${num}.png`;
 
     head.innerHTML = "솔로랭크";
