@@ -118,3 +118,8 @@ body{
     border-radius: 3px;
     background-color: rgb(172,172,172);
 }
+
+.participants{
+    margin: 3px;
+    align-items : center;
+}

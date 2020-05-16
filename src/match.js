@@ -12,6 +12,7 @@ export default async(match,accountId,champDic,spellDic)=>{
     var $bar = document.createElement('div');
     var $blockLeft = document.createElement('div');
     var $duration = document.createElement('div');
+    console.log(matchRes);
 
     $div.className = 'block';
     $queue.innerHTML = '<b>솔랭<b/>';
@@ -59,6 +60,12 @@ export default async(match,accountId,champDic,spellDic)=>{
     $items1.className = 'items';
     var $wardBought = document.createElement('div');
 
+    var $participantsBox = document.createElement('div');
+    var $participants0 = document.createElement('div');
+    var $participants1 = document.createElement('div');
+    $participants0.className = 'participants';
+    $participants1.className = 'participants';
+
     $queue.style.marginBottom = '3px';
     $datetime.style.marginBottom = '7px';
     $bar.style.lineHeight = '16px';
@@ -78,6 +85,8 @@ export default async(match,accountId,champDic,spellDic)=>{
     $levelInfo.style.marginBottom = '7px';
     $csInfo.style.marginBottom = '7px';
     $wardBought.style.marginTop = '5px';
+    $participantsBox.style.display = 'flex';
+    $participantsBox.style.alignItems = 'center';
 
     var participantId = 0;
     var myTeamId = 100;
@@ -111,6 +120,32 @@ export default async(match,accountId,champDic,spellDic)=>{
     const {spell1Id,spell2Id,
         stats:{champLevel,totalMinionsKilled,neutralMinionsKilled,visionWardsBoughtInGame,kills,assists,deaths,item0,item1,item2,item3,item4,item5,item6}
     } =  participants[participantId-1];
+
+    for(var i=0;i<10;i++){
+        const {championId} = participants[i];
+        const {player:{summonerName}} = participantIdentities[i];
+        var $participantdiv = document.createElement('div');
+        $participantdiv.style.display = 'flex';
+        $participantdiv.style.margin = '3px';
+        $participantdiv.style.textOverflow = 'ellipsis';
+        var $participantChampImg = document.createElement('img');
+        $participantChampImg.style.width = '18px';
+        $participantChampImg.style.height= '18px';
+        $participantChampImg.style.marginRight= '2px';
+        $participantChampImg.src = `${url}champion/${champDic[championId].id}.png`;
+        var $participantName = document.createElement('div');
+        $participantName.style.width = '70px';
+        $participantName.style.whiteSpace ='nowrap';
+        $participantName.style.overflow = 'hidden';
+        $participantName.style.textOverflow = 'ellipsis';
+        $participantName.style.cursor = 'pointer';
+        $participantName.addEventListener('click',e=>window.open(`./summoner.html?summonerName=${e.target.innerText}`));
+        $participantName.innerHTML = summonerName;
+        $participantdiv.appendChild($participantChampImg);
+        $participantdiv.appendChild($participantName);
+        if(i<5)$participants0.appendChild($participantdiv);
+        else $participants1.appendChild($participantdiv);
+    }
 
 
     $kills.innerHTML = kills + '    /   ';
@@ -194,6 +229,9 @@ export default async(match,accountId,champDic,spellDic)=>{
     $itemInfo.appendChild($items1);
     //$itemInfo.appendChild($wardBought);
 
+    $participantsBox.appendChild($participants0);
+    $participantsBox.appendChild($participants1);
+
     $statsBoxUp.appendChild($championProfilediv);
     $statsBoxUp.appendChild($spellProfile);
     $statsBox.appendChild($statsBoxUp);
@@ -205,5 +243,6 @@ export default async(match,accountId,champDic,spellDic)=>{
     $div.appendChild($statsInfo);
     $div.appendChild($itemInfo);
     $div.appendChild($item6);
+    $div.appendChild($participantsBox);
     return $div;
 }
