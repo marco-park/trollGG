@@ -4,6 +4,8 @@ export default async(match,accountId,champDic,spellDic)=>{
     const {timestamp, gameId} = match;
     const matchRes = await API.getRiotMatch({gameId});
     const {gameCreation, gameDuration, teams, participantIdentities, participants} = matchRes;
+    const timelines = await API.getRiotTimelines({gameId});
+    console.log(timelines);
 
     var date = new Date(gameCreation);
     var $div = document.createElement('div');
@@ -12,7 +14,6 @@ export default async(match,accountId,champDic,spellDic)=>{
     var $bar = document.createElement('div');
     var $blockLeft = document.createElement('div');
     var $duration = document.createElement('div');
-    console.log(matchRes);
 
     $div.className = 'block';
     $queue.innerHTML = '<b>솔랭<b/>';
@@ -87,7 +88,7 @@ export default async(match,accountId,champDic,spellDic)=>{
     $wardBought.style.marginTop = '5px';
     $participantsBox.style.display = 'flex';
     $participantsBox.style.alignItems = 'center';
-    $participantsBox.style.marginRight = '5px';
+    $participantsBox.style.margin = '5px';
 
     var participantId = 0;
     var myTeamId = 100;
@@ -117,10 +118,13 @@ export default async(match,accountId,champDic,spellDic)=>{
             myTeamTotalKill+=v.stats.kills;
         }
     })
+    console.log(participantId)
 
     const {spell1Id,spell2Id,
-        stats:{champLevel,totalMinionsKilled,neutralMinionsKilled,visionWardsBoughtInGame,kills,assists,deaths,item0,item1,item2,item3,item4,item5,item6}
+        stats:{damageDealtToObjectives, champLevel,totalMinionsKilled,neutralMinionsKilled,visionWardsBoughtInGame,kills,assists,deaths,item0,item1,item2,item3,item4,item5,item6}
     } =  participants[participantId-1];
+    
+    console.log(damageDealtToObjectives);
 
     for(var i=0;i<10;i++){
         const {championId} = participants[i];
@@ -147,7 +151,6 @@ export default async(match,accountId,champDic,spellDic)=>{
         if(i<5)$participants0.appendChild($participantdiv);
         else $participants1.appendChild($participantdiv);
     }
-
 
     $kills.innerHTML = kills + '    /   ';
     $deaths.innerHTML = deaths;

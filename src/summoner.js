@@ -12,6 +12,7 @@ const league = document.querySelector(".league"),
     winRate = league.querySelector(".league_winRate");
 const leagueProfile = document.querySelector(".league_profile");
 const $table = document.querySelector(".table");
+
 const handleSubmit = (e) =>{
     e.preventDefault();
     const summonerName = input.value;
@@ -38,7 +39,7 @@ const init = async() =>{
     }
     const {tier,rank,leaguePoints,wins,losses} = leagueRes[idx];
     const matchListRes = await API.getRiotMatchList(
-        {accountId, queue : 420, season : 13, beginIndex : 0, endIndex : 10});
+        {accountId, queue : 420, season : 13, beginIndex : 0, endIndex : 100});
     
     var num = 1;
     switch(rank){
@@ -68,9 +69,13 @@ const init = async() =>{
     data = spellListData.data;
     Object.keys(data).map((v,i)=>spellDic[data[v].key]={id:data[v].id});
     
+    // 유미 : 350
+
     matches.map(async(v,i)=>{
-        const $div = await match(v,accountId,champDic,spellDic);
-        $table.appendChild($div);
+        if(v.champion == 350){
+            const $div = await match(v,accountId,champDic,spellDic);
+            $table.appendChild($div);
+        }
     })
 }
 

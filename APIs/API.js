@@ -48,6 +48,15 @@ export const getRiotMatch = (data)=>{
     .catch(err => ({err}));
 }
 
+export const getRiotTimelines = (data)=>{
+    const url = `${apiUrl}match/riotTimelines`;
+    return fetch.getServer(url,data)
+    .then(res=>res.json())
+    .then(res=>JSON.parse(res))
+    .catch(err=>({err}));
+}
+
+
 export const getLeague = (data)=>{
     const url = `${apiUrl}user/league`;
     return fetch.getServer(url,data)
